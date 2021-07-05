@@ -1,0 +1,410 @@
+<!DOCTYPE html>
+<html xmlns="https://www.thymeleafe.org">
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<style>
+* {box-sizing: border-box;}
+
+body { 
+  margin: 0;
+  font-family: Arial, Helvetica, sans-serif;
+}
+
+.header {
+  overflow: hidden;
+  background-color: #A7F5F3;
+  padding: 20px 10px;
+   height: 100px;
+}
+
+.header a {
+  float: left;
+  color: black;
+  text-align: center;
+  padding: 12px;
+  text-decoration: none;
+  font-size: 18px; 
+  line-height: 25px;
+  border-radius: 4px;
+}
+
+.header a.logo {
+  font-size: 25px;
+  font-weight: bold;
+}
+
+.header a:hover {
+  background-color: #ddd;
+  color: black;
+  
+}
+
+.header a.active {
+  background-color: #F0AA1E;
+  color: white;
+}
+
+.header-right {
+  float: right;
+  
+  
+ 
+}
+
+
+@media screen and (max-width: 500px) {
+  .header a {
+    float: none;
+    display: block;
+    text-align: left;
+  }
+  
+  .header-right {
+    float: none;
+  }
+}
+</style>
+</head>
+<body>
+
+<div class="header">
+  <a href="#default" class="logo"><img src="https://vahan.nic.in/nrservices/faces/javax.faces.resource/icon-news-letter.png?ln=images" alt="Logo" width="50" height="33"></a>
+  <a align="right";color="#A7F5F3" >Dashboard</a>
+  <div class="header-right">
+    <a class="active" href="#home" >Home</a>
+  
+    <link rel="stylesheet"
+     href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" />
+        
+ 
+
+<title>BarGraph</title>
+
+  
+ </div>
+</div>
+
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.0/jquery.min.js"></script>
+<script type="text/javascript" src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js"></script>
+
+
+  
+                      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+                       <script src="https://code.highcharts.com/highcharts.js"></script>
+                       <script src="https://code.highcharts.com/modules/exporting.js"></script> 
+                      <script src="https://code.highcharts.com/themes/grid-light.js"></script>
+                     
+                     
+                      <script src="https://code.highcharts.com/modules/export-data.js"></script>
+                      <script src="https://code.highcharts.com/modules/accessibility.js"></script>
+                      <script src="http://code.highcharts.com/modules/drilldown.js"></script>
+                    
+                      
+</head>
+<body>
+   <div class="container">
+         <h2 style="font-family:trebuchet ms;text-align:center;" >Permit Applications</h2>
+                  
+             <div id="permission" style="width: 100%; margin: 0" >
+              
+             <div id ="container"
+                 style="width: 50%; height: 300px; margin: 0;  float:left "></div>
+               <div id="container2"
+                 style="width: 50%; height: 300px; margin: 0 ; float:left"></div>
+                       
+                 </div>
+               
+                 
+                 <div class="permission2" style ="margin: 0">
+                <h2  style="font-family:trebuchet ms;text-align:center;"  >Permit-wise Data Table</h2>
+                <br />
+                 
+</head>
+<body>
+<div class="container">
+<div class ="table-responsive">
+
+                 <table id="dtBasicExample" class="table table-striped table-bordered  class="table" cellspacing="0" width="100%"">
+                   <thead>
+                     <tr>
+                      
+      
+      <th class="th-sm" style = "font-family:trebuchet ms">S_No
+      </th>
+      <th class="th-sm" style = "font-family:trebuchet ms">State_Code
+      </th>
+      <th class="th-sm" style = "font-family:trebuchet ms">Rto_Code
+      </th>
+      <th class="th-sm" style ="font-family:trebuchet ms">Transaction_Type
+      </th>
+      <th class="th-sm" style ="font-family:trebuchet ms">Application_Number
+      </th>
+                 </tr>
+               </thead>
+           <tbody>
+          
+    <div th:if="${not #lists.isEmpty(products)}">
+      
+        
+           
+               
+               
+               
+                
+           
+            <tr th:each="product : ${products}">
+                <td th:text="${product._id}"></td> 
+                <td th:text="${product.statecode}"></td>
+                 <td th:text="${product.rtocode}"></td>
+                 <td th:text="${product.transactype}"></td>
+                 <td th:text="${product.appno}"></td>
+               
+                
+                
+               
+           </tr>     
+                </div>
+                </tbody>
+        </table>
+   </div></div></body></div>
+</div>
+    
+    
+    <script type="text/javascript">
+    $(document).ready(
+            function() {
+      $.ajax({
+                    url : "/barGraph/**",
+                  
+                   success: function(result){
+              		 
+              		var stateAg = JSON.parse(result).stateag;
+                	var count = JSON.parse(result).count;
+          	 
+           	     	var state = JSON.parse(result).state;
+                	var Rto = JSON.parse(result).Rtono;
+       	 
+       		        var Countno = JSON.parse(result).RtoCount;
+       
+          //       	console.log(stateAg);	
+           //       	console.log(count);	
+          //       	console.log(state);	
+         //         	console.log(Rto);	
+       //         	console.log(Countno);	
+      //           	console.log(Rto);	
+                  	
+                         
+                     
+            
+    
+   
+    
+  //array for data source
+    var data_al = [];
+    var data_al1=[];
+    var data_x_branch_al=[];
+    var data_x_opps_type_al=[];
+    var data_y_job_no_al= [];
+    var data_x_branch_branch=[];
+    var data_y_job_no_branch=[];
+    for(var i = 0; i <stateAg.length; i++){
+    	data_al.push({
+    		x_stateAg: stateAg[i],				//state name
+    		countno: Countno[i],						//count name
+    		state: Rto[i]		//rto name
+      });
+    
+    }
+    for(var i=0;i<count.length;i++){
+    	data_al1.push({
+    		X_state:state[i],
+    	    count: count[i]
+    	})
+    	
+    }
+    
+    
+    
+    
+    
+ //   console.log(data_al); 
+ //  console.log(data_al1);
+    const sort_by = (field, reverse, primer) => {
+
+    	  const key = primer ?
+    	    function(x) {
+    	      return primer(x[field])
+    	    } :
+    	    function(x) {
+    	      return x[field]
+    	    };
+    	  reverse = !reverse ? 1 : -1;
+    	  return function(a, b) {
+    	    return a = key(a), b = key(b), reverse * ((a > b) - (b > a));
+    	  }
+    	}
+   data_al.sort(sort_by('x_stateAg', false, (a) =>  a.toUpperCase()));
+    		data_al1.sort(sort_by('X_state', false, (a) =>  a.toUpperCase()));
+    	
+    		 
+    		 
+    		 for(var i=0;i<Countno.length;i++){
+    			 data_x_branch_al[i]=data_al[i].x_stateAg;
+    			 data_x_opps_type_al[i]=data_al[i].state;
+    			 data_y_job_no_al[i]=data_al[i].countno;
+    		 }
+    	    for(var i=0;i<count.length;i++){
+    	    	data_x_branch_branch[i]=data_al1[i].X_state;
+    	    	data_y_job_no_branch[i]=data_al1[i].count;
+    	    }
+    //	console.log(data_x_branch_branch);
+   // 	console.log(data_y_job_no_branch);	 
+    	
+ //   data_x_branch_al = stateAg;
+
+ //   data_x_branch_branch = state;
+ //   data_y_job_no_branch = count;
+ //   data_x_opps_type_al = Rto;
+//    data_y_job_no_al = Countno;
+
+
+
+    //array for highchart
+    var dataseries = [];
+    var datadrill = [];
+    var datadrill_data = [];
+    var datadrill_data2= [];
+
+    function getFields(input, val) {
+     	  var output = [];
+     	  for (var i=0; i < input.length ; ++i)
+     	    if(input[i]['state'] == val){
+     	      output.push(input[i]);
+     	    }        
+     	  return output;
+     	}
+
+     	var ctr = 0;
+     	for(var i = 0; i < count.length; i++){
+     	  dataseries.push({
+     	    name: data_x_branch_branch[i],				//state name
+     	    y: data_y_job_no_branch[i],						//count total 
+     	    drilldown: data_x_branch_branch[i]		//state name
+     	  });
+     	
+     	  var counts = [];
+     	  for (var x = 0; x < data_al.length; x++) {
+     	    counts[data_al[x].x_stateAg] = 1 + (counts[data_al[x].x_stateAg] || 0);
+     	  }
+     		
+     	  for(var j = 0; j < counts[data_x_branch_branch[i]]; j++, ctr++){
+     	
+     	    if(data_x_branch_branch[i] == data_x_branch_al[ctr]){
+     	      datadrill_data.push({
+     	        state: data_x_branch_al[ctr],			//state name
+     	        name: data_x_opps_type_al[ctr],		//Rto type
+     	        y: data_y_job_no_al[ctr]					//count Rto
+     	      });
+     	    }
+     	  }
+     	  
+     	  datadrill.push({
+     		  	events: {
+     		      click: function() {
+     		        this.chart.drillUp();
+     		      }
+     		    },
+     		    name: data_x_branch_branch[i],			//state name
+     		    id: data_x_branch_branch[i],				//Rto name
+     		    data: getFields(datadrill_data, data_x_branch_branch[i])								
+     		  });
+     	}
+   
+     //	console.log(dataseries);console.log(datadrill);
+       Data(dataseries,datadrill);  dll(data_x_branch_branch,data_y_job_no_branch);     
+     }
+                    });
+                }); 
+  
+  function dll(stateDtls,countDtls){
+  	
+  	
+  Highcharts.chart('container', {
+      chart: {
+          type: 'column'
+      },
+      title: {
+            text: 'Statewise Permit Application'
+		  },
+        subtitle: {
+            text: 'Statewise'
+        },
+        xAxis: {
+           categories: stateDtls
+         
+        },
+        yAxis: {
+            min:0,
+            max:50,
+            title: {
+                text: 'Number of permit applications'
+            }
+        },
+        tooltip: {
+            headerFormat: '<span style="font-size:10px">{point.key}</span><table>',
+            pointFormat: '<tr><td style="color:{series.color};padding:0">{series.name}: </td>'+
+            '<td style="padding:0"><b>{point.y:1f} </b></td></tr>',
+            footerFormat: '</table>',
+            shared: true,
+        	  useHTML: true
+         },
+         plotOptions: {
+             column: {
+                  pointPadding: 0.2,
+                  borderWidth: 0
+               }
+         },
+         series: [{
+                 name:'Permit',
+                 data: countDtls,
+                 color: '#F0AA1E',
+              }]
+                      	      
+         });
+  }
+  
+  function Data(dataseries,datadrill){
+	   
+      Highcharts.chart('container2', {
+    	  chart: {
+    		  	type: 'column',
+    		   
+    		  },
+        title: {text: 'RTO-wise'},
+        subtitle: {text: 'Click on State for RTOs'},
+        xAxis: {type: 'category', crosshair: true, color:'orange'},
+        yAxis: {title: {text: 'Application' }},
+        plotOptions: {series: {borderWidth: 0, dataLabels: {enabled: false}}},
+        tooltip: {shared: false},
+        legend: {enabled: true},
+        series: [{
+          name: 'State',
+          colorByPoint: true,
+          data: dataseries
+        }],
+        drilldown: {
+          series: datadrill
+        }
+      });
+          
+        
+      }
+  $(document).ready(function () {
+	  $('#dtBasicExample').DataTable();
+	  $('.dataTables_length').addClass('bs-select');
+	});
+ 
+    </script>
+</body>
+</html>
